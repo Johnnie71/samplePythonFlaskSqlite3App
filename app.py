@@ -30,16 +30,11 @@ def books():
         new_author = request.form["author"]
         new_lang = request.form["language"]
         new_title = request.form["title"]
-        sql = """INSERT INTO books (author, lanuage, title) VALUES (?, ?, ?)"""
-        new_obj = {
-            "id": id,
-            "author": new_author,
-            "language": new_lang,
-            "title": new_title
-        }
+        sql = """INSERT INTO books (author, language, title) VALUES (?, ?, ?)"""
+        cursor = cursor.execute(sql, (new_author, new_lang, new_title))
+        connection.commit()
+        return f"Book with the id: {cursor.lastrowid} created successfully"
     
-
-
 
 @app.route('/')
 def index():
