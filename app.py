@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, request, jsonify
 import sqlite3
 
@@ -35,6 +36,40 @@ def books():
         connection.commit()
         return f"Book with the id: {cursor.lastrowid} created successfully"
     
+@app.route("/book/<int:id>", methods=["GET", "PUT", "DELETE"])
+def single_book(id):
+    connection = db_connection()
+    cursor = connection.cursor()
+    book = None
+    if request.method == "GET":
+        cursor.execute("SELECT * FROM books WHERE id=?", (id))
+        rows = cursor.fetchall()
+        for r in rows:
+            book = r
+        if book is not None:
+            return jsonify(book), 200
+        else:
+            return "Something went wrong!", 404
+
+    if request.method == "PUT":
+        sql = """UPDATE book SET 
+            title=?,
+            author=?,
+            language=? 
+            WHERE id=?
+        """
+        author = request.form["author"]
+        language = request.form["language"]
+        title = request.form["title"]
+        updated_book = {
+            "id": id,
+            "author": author,
+            "language": language,
+            "title": title
+        }
+        connection.execute(sql, (title, author, language, id))
+        connection.commit()
+        return jsonify(updated_book)
 
 @app.route('/')
 def index():
