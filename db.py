@@ -11,3 +11,5 @@ sql_query = """ CREATE TABLE books (
     language text NOT NULL,
     title text NOT NULL
 )"""
+
+cursor.execute(sql_query)
