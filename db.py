@@ -1,3 +1,4 @@
 import sqlite3
 
-connnect = sqlite3.connect('books.sqlite')
+connect = sqlite3.connect('books.sqlite') #creating the database
+
