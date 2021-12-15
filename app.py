@@ -24,7 +24,7 @@ def books():
         ]
         if books is not None:
             print(books)
-            return render_template("base.html", books)
+            return render_template("base.html", books=books)
 
     if request.method == "POST":
         print("get post req")
