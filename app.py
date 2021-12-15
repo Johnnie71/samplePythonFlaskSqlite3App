@@ -58,7 +58,6 @@ def single_book(id):
         dict(author=row[1], language=row[2], title=row[3])
         for row in cursor.fetchall()
     ]
-    print(book)
     return render_template("book.html", book=book)
 
 @app.route("/delete/<int:id>")
@@ -68,7 +67,7 @@ def delete(id):
 
     cursor.execute("DELETE FROM books WHERE id=?", (id,))
     connection.commit()
-    return render_template('book.html')
-    
+    return redirect(url_for('index'))
+
 if __name__ == "__main__":
     app.run(debug=True)
