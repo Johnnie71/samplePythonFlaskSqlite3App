@@ -70,6 +70,11 @@ def single_book(id):
         connection.execute(sql, (title, author, language, id))
         connection.commit()
         return jsonify(updated_book)
+    
+    if request.method("DELETE"):
+        sql = """ DELETE FROM book WHERE id=? """
+        connection.execute(sql, (id))
+        connection.commit()
 
 @app.route('/')
 def index():
