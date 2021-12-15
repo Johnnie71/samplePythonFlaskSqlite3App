@@ -1,3 +1,4 @@
+from sqlite3.dbapi2 import connect
 from flask import Flask, render_template, request, url_for, redirect
 import sqlite3
 
@@ -41,7 +42,7 @@ def books():
         new_author = request.form["author"]
         new_lang = request.form["language"]
         new_title = request.form["title"]
-        print(new_author, new_title, new_lang)
+    
         sql = """INSERT INTO books (author, language, title) VALUES (?, ?, ?)"""
         cursor = cursor.execute(sql, (new_author, new_lang, new_title))
         connection.commit()
@@ -60,6 +61,14 @@ def single_book(id):
     print(book)
     return render_template("book.html", book=book)
 
+@app.route("/delete/<int:id>")
+def delete(id):
+    connection = db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("DELETE FROM books WHERE id=?", (id,))
+    connection.commit()
+    return render_template('book.html')
     
 if __name__ == "__main__":
     app.run(debug=True)

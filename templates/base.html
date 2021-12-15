@@ -27,6 +27,7 @@
 		{% for book in books%}
 		<div>
 			<a href="/book/{{book.id}}">{{book.title}}</a>
+			<a href="/delete/{{book.id}}">Delete</a>
 		</div>
 		<br />
 		{% endfor %}
