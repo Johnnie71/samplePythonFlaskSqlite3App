@@ -40,6 +40,15 @@ def add():
     cursor = cursor.execute(sql, (new_author, new_lang, new_title))
     connection.commit()
     return redirect(url_for('index'))
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    connection = db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("DELETE FROM books WHERE id=?", (id,))
+    connection.commit()
+    return redirect(url_for('index'))
     
 @app.route("/book/<int:id>")
 def single_book(id):
@@ -55,15 +64,6 @@ def single_book(id):
 
     return render_template('book.html', book=book)
 
-
-@app.route("/delete/<int:id>")
-def delete(id):
-    connection = db_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("DELETE FROM books WHERE id=?", (id,))
-    connection.commit()
-    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(debug=True)
