@@ -21,6 +21,13 @@
 				<br />
 				<button type="submit">Submit</button>
 			</form>
+			<br />
 		</div>
+		<h3>List of books</h3>
+		{% for book in books%}
+		<div>
+			<span>{{book.title}}</span>
+		</div>
+		{% endfor %}
 	</body>
 </html>
