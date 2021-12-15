@@ -18,13 +18,9 @@
 				<br />
 				<label for="language">Language</label>
 				<input type="text" name="language" placeholder="Language" />
+				<br />
+				<button type="submit">Submit</button>
 			</form>
-
-			{% for book in books%}
-			<div>
-				<a>{{book.title}}</a>
-			</div>
-			{% endfor %}
 		</div>
 	</body>
 </html>

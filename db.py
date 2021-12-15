@@ -13,3 +13,4 @@ sql_query = """ CREATE TABLE books (
 )"""
 
 cursor.execute(sql_query)
+print("table created")

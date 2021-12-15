@@ -27,14 +27,14 @@ def books():
             return render_template("base.html", books)
 
     if request.method == "POST":
-        print("get post req")
         new_author = request.form["author"]
         new_lang = request.form["language"]
         new_title = request.form["title"]
+        print(new_author, new_title, new_lang)
         sql = """INSERT INTO books (author, language, title) VALUES (?, ?, ?)"""
         cursor = cursor.execute(sql, (new_author, new_lang, new_title))
         connection.commit()
-        return render_template("books.html")
+        return f"Book with the id: {cursor.lastrowid} created successfully"
     
 @app.route("/book/<int:id>", methods=["GET", "PUT", "DELETE"])
 def single_book(id):
