@@ -23,7 +23,8 @@ def books():
             for row in cursor.fetchall()
         ]
         if books is not None:
-            return jsonify(books)
+            print(books)
+            return render_template("base.html", books)
 
     if request.method == "POST":
         print("get post req")
