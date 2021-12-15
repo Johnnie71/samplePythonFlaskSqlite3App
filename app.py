@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect
 import sqlite3
 
 app = Flask(__name__)
@@ -49,7 +49,6 @@ def books():
     
 @app.route("/book/<int:id>")
 def single_book(id):
-    print("HERE IS THE ID", id)
     connection = db_connection()
     cursor = connection.cursor()
     
@@ -58,16 +57,8 @@ def single_book(id):
         dict(author=row[1], language=row[2], title=row[3])
         for row in cursor.fetchall()
     ]
+    print(book)
     return render_template("book.html", book=book)
-    
-    print("Here are the ROWS!",rows)
-    for r in rows:
-        book = r
-    if book is not None:
-        print(book)
-        return render_template("book.html", book=book), 200
-    else:
-        return "Something went wrong!", 404
 
     
 if __name__ == "__main__":

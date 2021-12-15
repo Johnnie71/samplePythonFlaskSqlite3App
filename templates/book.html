@@ -7,11 +7,10 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<h1>HELLO</h1>
-		<br />
-
 		{% for r in book %}
-		<h2>{{r.title}}</h2>
+		<h2>Title: {{r.title}}</h2>
+		<p>Author: {{r.author}}</p>
+		<p>Language: {{r.language}}</p>
 		{% endfor %}
 	</body>
 </html>
