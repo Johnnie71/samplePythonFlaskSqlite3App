@@ -27,7 +27,7 @@ def index():
     print(books)
     return render_template("base.html", books=books)
 
-@app.route('/add', methods=["GET", "POST"])
+@app.route('/add')
 def add():
     connection = db_connection()
     cursor = connection.cursor()
