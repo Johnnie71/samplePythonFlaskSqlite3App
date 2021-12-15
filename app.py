@@ -49,17 +49,23 @@ def books():
     
 @app.route("/book/<int:id>")
 def single_book(id):
+    print("HERE IS THE ID", id)
     connection = db_connection()
     cursor = connection.cursor()
-    book = None
     
-    cursor.execute("SELECT * FROM books WHERE id=?", (id))
-    rows = cursor.fetchall()
+    cursor.execute("SELECT * FROM books WHERE id=?", (id,))
+    book = [
+        dict(author=row[1], language=row[2], title=row[3])
+        for row in cursor.fetchall()
+    ]
+    return render_template("book.html", book=book)
+    
+    print("Here are the ROWS!",rows)
     for r in rows:
         book = r
     if book is not None:
         print(book)
-        return render_template("book.html", book=book)
+        return render_template("book.html", book=book), 200
     else:
         return "Something went wrong!", 404
 
