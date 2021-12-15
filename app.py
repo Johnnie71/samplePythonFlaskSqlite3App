@@ -27,30 +27,19 @@ def index():
     print(books)
     return render_template("base.html", books=books)
 
-@app.route('/books', methods=["GET", "POST"])
-def books():
+@app.route('/add', methods=["GET", "POST"])
+def add():
     connection = db_connection()
     cursor = connection.cursor()
 
-    if request.method == "GET":
-        cursor = connection.execute('SELECT * FROM books')
-        books = [
-            dict(id=row[0], author=row[1], language=row[2], title=row[3])
-            for row in cursor.fetchall()
-        ]
-        if books is not None:
-            print(books)
-            return render_template("base.html", books)
-
-    if request.method == "POST":
-        new_author = request.form["author"]
-        new_lang = request.form["language"]
-        new_title = request.form["title"]
+    new_author = request.form.get("author")
+    new_lang = request.form.get("language")
+    new_title = request.form.get("title")
     
-        sql = """INSERT INTO books (author, language, title) VALUES (?, ?, ?)"""
-        cursor = cursor.execute(sql, (new_author, new_lang, new_title))
-        connection.commit()
-        return redirect(url_for('index'))
+    sql = """INSERT INTO books (author, language, title) VALUES (?, ?, ?)"""
+    cursor = cursor.execute(sql, (new_author, new_lang, new_title))
+    connection.commit()
+    return redirect(url_for('index'))
     
 @app.route("/book/<int:id>")
 def single_book(id):
