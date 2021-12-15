@@ -16,11 +16,15 @@ def db_connection(): ## creating the connection to the sql database
 @app.route('/')
 def index():
     connection = db_connection()
-    cursor = connection.execute("SELECT * FROM books")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM books")
+
     books = [
         dict(id=row[0], author=row[1], language=row[2], title=row[3])
         for row in cursor.fetchall()
     ]
+
+    print(books)
     return render_template("base.html", books=books)
 
 @app.route('/books', methods=["GET", "POST"])
@@ -52,13 +56,16 @@ def books():
 def single_book(id):
     connection = db_connection()
     cursor = connection.cursor()
-    
+
     cursor.execute("SELECT * FROM books WHERE id=?", (id,))
+
     book = [
-        dict(author=row[1], language=row[2], title=row[3])
+        dict(id=row[0], author=row[1], language=row[2], title=row[3])
         for row in cursor.fetchall()
     ]
-    return render_template("book.html", book=book)
+
+    return render_template('book.html', book=book)
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
