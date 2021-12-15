@@ -1,4 +1,4 @@
-from sqlite3.dbapi2 import connect
+from sqlite3
 from flask import Flask, render_template, request, url_for, redirect
 import sqlite3
 
