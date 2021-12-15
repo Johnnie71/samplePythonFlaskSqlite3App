@@ -1,4 +1,3 @@
-from sqlite3
 from flask import Flask, render_template, request, url_for, redirect
 import sqlite3
 
@@ -17,6 +16,7 @@ def db_connection(): ## creating the connection to the sql database
 def index():
     connection = db_connection()
     cursor = connection.cursor()
+
     cursor.execute("SELECT * FROM books")
 
     books = [
