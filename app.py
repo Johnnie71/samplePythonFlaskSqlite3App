@@ -58,7 +58,8 @@ def single_book(id):
         for r in rows:
             book = r
         if book is not None:
-            return jsonify(book), 200
+            print(book)
+            return render_template("book.html", book=book)
         else:
             return "Something went wrong!", 404
 

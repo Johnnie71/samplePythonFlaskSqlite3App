@@ -26,8 +26,9 @@
 		<h3>List of books</h3>
 		{% for book in books%}
 		<div>
-			<span>{{book.title}}</span>
+			<a href="/book/{{book.id}}">{{book.title}}</a>
 		</div>
+		<br />
 		{% endfor %}
 	</body>
 </html>
