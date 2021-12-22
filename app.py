@@ -27,7 +27,21 @@ def index():
     print(books)
     return render_template("base.html", books=books)
 
-@app.route('/add')
+@app.route("/book/<int:id>")
+def single_book(id):
+    connection = db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM books WHERE id=?", (id,))
+
+    book = [
+        dict(id=row[0], author=row[1], language=row[2], title=row[3])
+        for row in cursor.fetchall()
+    ]
+
+    return render_template('book.html', book=book)
+
+@app.route('/add', methods=["POST"])
 def add():
     connection = db_connection()
     cursor = connection.cursor()
@@ -50,20 +64,5 @@ def delete(id):
     connection.commit()
     return redirect(url_for('index'))
     
-@app.route("/book/<int:id>")
-def single_book(id):
-    connection = db_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM books WHERE id=?", (id,))
-
-    book = [
-        dict(id=row[0], author=row[1], language=row[2], title=row[3])
-        for row in cursor.fetchall()
-    ]
-
-    return render_template('book.html', book=book)
-
-
 if __name__ == "__main__":
     app.run(debug=True)
